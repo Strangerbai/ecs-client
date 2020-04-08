@@ -1,6 +1,0 @@
-server:
-  port: 8090
-logging:
-  config: classpath:logback-spring.xml
-  path: ./
-  file: log.log
