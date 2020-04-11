@@ -28,7 +28,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         tbUserInfo.setCreateTime(new Date());
         tbUserInfo.setUpdateTime(new Date());
         tbUserInfo.setToken(RandomUtil.getStringWithNumber(16));
-        tbUserInfo.setRoles(Role.ADMIN.getValue());  // 默认是游客
+        tbUserInfo.setRoles(Role.EDITOR.getValue());  // 默认是游客
+        tbUserInfo.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         return tbUserInfoMapper.insertSelective(tbUserInfo) > 0;
     }
 

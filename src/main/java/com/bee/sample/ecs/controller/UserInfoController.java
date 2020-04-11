@@ -73,4 +73,11 @@ public class UserInfoController {
         return result;
     }
 
+    @RequestMapping(value = "/logout")
+    public Result logout(){
+        Result result = new Result();
+        result.setCode(ResultCode.SUCCESS);
+        return result;
+    }
+
 }
