@@ -6,16 +6,16 @@ import com.bee.sample.ecs.dto.mapper.TbMemberInfoDOMapper;
 import com.bee.sample.ecs.dto.model.TbMemberInfoDO;
 import com.bee.sample.ecs.dto.model.TbMemberInfoDOExample;
 import com.bee.sample.ecs.service.IMemberInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Slf4j
 @Service
 public class IMemberInfoServiceImpl implements IMemberInfoService {
-
-    protected static final org.slf4j.Logger logger = LoggerFactory.getLogger(IMemberInfoServiceImpl.class);
 
     @Resource
     TbMemberInfoDOMapper tbMemberInfoDOMapper;
@@ -25,7 +25,7 @@ public class IMemberInfoServiceImpl implements IMemberInfoService {
         TbMemberInfoDOExample example = new TbMemberInfoDOExample();
         example.createCriteria().andStatusEqualTo(Byte.valueOf(status));
         List<TbMemberInfoDO> result = tbMemberInfoDOMapper.selectByExample(example);
-        logger.info("getMemberInfoByStatus result : {}", JSON.toJSONString(result));
+        log.info("getMemberInfoByStatus result : {}", JSON.toJSONString(result));
         return result;
     }
 }

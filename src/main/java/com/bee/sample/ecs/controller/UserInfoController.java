@@ -5,6 +5,7 @@ import com.bee.sample.ecs.controller.request.UserInfo;
 import com.bee.sample.ecs.controller.response.Result;
 import com.bee.sample.ecs.entity.ResultCode;
 import com.bee.sample.ecs.service.UserInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,71 +14,55 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+@Slf4j
 @RestController
 @RequestMapping("/dev-api/vue-element-admin/user")
 public class UserInfoController {
-
-    protected static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 
     @Resource(name = "userInfoServiceImpl")
     UserInfoService userInfoService;
 
     @RequestMapping(value = "/register")
-    public Result registerUser(@RequestBody UserInfo userInfo){
-        Result result = new Result();
+    public Result<String> registerUser(@RequestBody UserInfo userInfo){
         UserInfo userInfo1 = userInfoService.getUserByUsername(userInfo.getUsername());
         if(userInfo1!= null){
-            result.setCode(ResultCode.INTERNAL_SERVER_ERROR);
-            return result;
+            return Result.fail(ResultCode.FAIL);
         }
         boolean res =  userInfoService.createUser(userInfo);
         if(res){
             String token = userInfoService.getUserByUsername(userInfo.getUsername()).getToken();
-            result.setCode(ResultCode.SUCCESS);
-            result.setData(token);
-            logger.info("token : {}", token);
-            return result;
+            log.info("token : {}", token);
+            return Result.success(token);
         }
-        return result;
+        return Result.fail(ResultCode.FAIL);
     }
 
     @RequestMapping(value = "/info")
-    public Result getUserInfo(@RequestParam(name = "token") String token){
+    public Result<UserInfo> getUserInfo(@RequestParam(name = "token") String token){
         UserInfo userInfo =  userInfoService.getUserByToken(token);
-        Result result = new Result();
         if(userInfo != null){
-            result.setCode(ResultCode.SUCCESS);
-            result.setData(userInfo);
-            logger.info("userInfo : {}", JSON.toJSONString(userInfo));
+            log.info("userInfo : {}", JSON.toJSONString(userInfo));
+            return Result.success(userInfo);
         } else{
-            result.setCode(ResultCode.INTERNAL_SERVER_ERROR);
+            return Result.fail(ResultCode.FAIL.getCode(),"用户已注册");
         }
-        return result;
-
-
-
     }
 
     @RequestMapping(value = "/login")
-    public Result login(@RequestBody UserInfo userInfo){
+    public Result<String> login(@RequestBody UserInfo userInfo){
         UserInfo userInfo1 =  userInfoService.getUserByUsername(userInfo.getUsername());
-        Result result = new Result();
         if(userInfo1!=null && userInfo1.getPassword().equals(userInfo.getPassword())){
             String token = userInfo1.getToken();
-            result.setCode(ResultCode.SUCCESS);
-            result.setData(token);
-            logger.info("login : {}", JSON.toJSONString(userInfo1));
+            log.info("login : {}", JSON.toJSONString(userInfo1));
+            return Result.success(token);
         }else{
-            result.setCode(ResultCode.INTERNAL_SERVER_ERROR);
+            return Result.fail(ResultCode.FAIL.getCode(),"登录失败");
         }
-        return result;
     }
 
     @RequestMapping(value = "/logout")
-    public Result logout(){
-        Result result = new Result();
-        result.setCode(ResultCode.SUCCESS);
-        return result;
+    public Result<Boolean> logout(){
+        return Result.success(Boolean.TRUE);
     }
 
 }
