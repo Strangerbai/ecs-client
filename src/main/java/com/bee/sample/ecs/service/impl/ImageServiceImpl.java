@@ -1,8 +1,10 @@
 package com.bee.sample.ecs.service.impl;
 
+import com.bee.sample.ecs.dto.model.TbImage;
 import com.bee.sample.ecs.entity.EcsConstant;
 import com.bee.sample.ecs.repository.ImageRepository;
 import com.bee.sample.ecs.service.ImageService;
+import com.bee.sample.ecs.utils.FtpUtil;
 import com.bee.sample.ecs.utils.ThreadLocalUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,9 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -21,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
     ImageRepository imageRepository;
 
     @Override
-    public String uploadImage(MultipartFile originFile, File imageFile) throws IOException {
+    public String uploadImage(MultipartFile originFile) throws IOException {
         String fileName = originFile.getOriginalFilename();
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         List<String> extList = Arrays.asList(".jpg", ".png", ".jpeg", ".gif");
@@ -41,6 +45,13 @@ public class ImageServiceImpl implements ImageService {
             return url;
         }
         return "";
+    }
+
+    @Override
+    public List<String> getUserPictureName() {
+        List<TbImage> images = imageRepository.getImageInfo(ThreadLocalUtil.getCookie());
+        List<String> result = images.stream().map(TbImage::getImageName).collect(Collectors.toList());
+        return result;
     }
 
 }

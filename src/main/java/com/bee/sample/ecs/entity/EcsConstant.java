@@ -2,7 +2,7 @@ package com.bee.sample.ecs.entity;
 
 public class EcsConstant {
 
-    public static final String BASIS_PATH = "/var/ftp/test/img";
+    public static final String BASIS_PATH = "/var/ftp/test/img/";
 
     public static final String HOST_NAME = "39.101.207.71";
 

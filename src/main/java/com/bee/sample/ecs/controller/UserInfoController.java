@@ -6,6 +6,7 @@ import com.bee.sample.ecs.controller.response.Result;
 import com.bee.sample.ecs.entity.EcsConstant;
 import com.bee.sample.ecs.entity.ResultCode;
 import com.bee.sample.ecs.service.UserInfoService;
+import com.bee.sample.ecs.service.impl.ImageServiceImpl;
 import com.bee.sample.ecs.utils.FtpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class UserInfoController {
     UserInfoService userInfoService;
 
     @Resource
-    FtpUtil ftpUtil;
+    ImageServiceImpl imageService;
 
     @Autowired
     private ServletContext servletContext;
@@ -82,28 +83,16 @@ public class UserInfoController {
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
     public Result<String> uploadImg(@RequestPart(name = "file") MultipartFile file) throws IOException {
         log.info("fileName : {}, originFileName : {}", file.getName(), file.getOriginalFilename());
-
-        BASE64Encoder base64Encoder =new BASE64Encoder();
-        String base64EncoderImg = file.getOriginalFilename()+","+ base64Encoder.encode(file.getBytes());
-
-        String fileName = file.getOriginalFilename();
-        String suffixName = fileName.substring(fileName.lastIndexOf("."));
-        List<String> extList = Arrays.asList(".jpg", ".png", ".jpeg", ".gif");
-        if (!extList.contains(suffixName)) {
-            return Result.fail(ResultCode.FAIL.getCode(),"图片格式非法");
-        }
-        fileName = UUID.randomUUID().toString().replace("-", "") + suffixName;
-        String url = "http://" +  EcsConstant.HOST_NAME +  ":" + EcsConstant.IMAGE_PORT + "/img/" + fileName;
-//        String uploadDir = "/Users/weidian/logs/";
-        String uploadDir = EcsConstant.BASIS_PATH;
-        File dest = new File( uploadDir + fileName);
-        // 检测是否存在目录
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdirs();
-        }
-        file.transferTo(dest);
+        String url = imageService.uploadImage(file);
         return Result.success(url);
+    }
 
+
+    @RequestMapping(value = "/getPictureName")
+    public Result<List<String>> getPictureName(){
+        List<String> pictures = imageService.getUserPictureName();
+        log.info("picture:{}", pictures);
+        return Result.success(pictures);
     }
 
 
