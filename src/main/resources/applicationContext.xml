@@ -11,6 +11,7 @@
                    http://www.springframework.org/schema/cache
                    http://www.springframework.org/schema/cache/spring-cache.xsd">
     <import resource="payIntegration-datasource.xml"/>
+    <context:property-placeholder location="classpath:ftp.properties"/>
 
 
     <!--<bean id="transactionManager"-->

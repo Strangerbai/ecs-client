@@ -1,4 +1,4 @@
-package com.bee.sample.ecs.preHandle;
+package com.bee.sample.ecs.entity;
 
 
 import java.lang.annotation.ElementType;

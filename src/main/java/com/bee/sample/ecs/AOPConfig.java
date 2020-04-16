@@ -1,7 +1,7 @@
 package com.bee.sample.ecs;
 
 import com.bee.sample.ecs.entity.Role;
-import com.bee.sample.ecs.preHandle.AuthInfo;
+import com.bee.sample.ecs.entity.AuthInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,7 +29,7 @@ public class AOPConfig {
     }
 
 
-    @Around("@within(com.bee.sample.ecs.preHandle.AuthInfo)")
+    @Around("@within(com.bee.sample.ecs.entity.AuthInfo)")
     public Object authAop(final ProceedingJoinPoint pjp) throws Throwable{
         try{
             Object args = pjp.getArgs();

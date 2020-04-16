@@ -44,7 +44,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="user_info" domainObjectName="TbUserInfo" enableCountByExample="false"
+        <table schema="" tableName="t_image" domainObjectName="TbImage" enableCountByExample="false"
                enableUpdateByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false"

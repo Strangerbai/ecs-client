@@ -3,16 +3,23 @@ package com.bee.sample.ecs.controller;
 import com.alibaba.fastjson.JSON;
 import com.bee.sample.ecs.controller.request.UserInfo;
 import com.bee.sample.ecs.controller.response.Result;
+import com.bee.sample.ecs.entity.EcsConstant;
 import com.bee.sample.ecs.entity.ResultCode;
 import com.bee.sample.ecs.service.UserInfoService;
+import com.bee.sample.ecs.utils.FtpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -21,6 +28,12 @@ public class UserInfoController {
 
     @Resource(name = "userInfoServiceImpl")
     UserInfoService userInfoService;
+
+    @Resource
+    FtpUtil ftpUtil;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @RequestMapping(value = "/register")
     public Result<String> registerUser(@RequestBody UserInfo userInfo){
@@ -64,5 +77,35 @@ public class UserInfoController {
     public Result<Boolean> logout(){
         return Result.success(Boolean.TRUE);
     }
+
+
+    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
+    public Result<String> uploadImg(@RequestPart(name = "file") MultipartFile file) throws IOException {
+        log.info("fileName : {}, originFileName : {}", file.getName(), file.getOriginalFilename());
+
+        BASE64Encoder base64Encoder =new BASE64Encoder();
+        String base64EncoderImg = file.getOriginalFilename()+","+ base64Encoder.encode(file.getBytes());
+
+        String fileName = file.getOriginalFilename();
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        List<String> extList = Arrays.asList(".jpg", ".png", ".jpeg", ".gif");
+        if (!extList.contains(suffixName)) {
+            return Result.fail(ResultCode.FAIL.getCode(),"图片格式非法");
+        }
+        fileName = UUID.randomUUID().toString().replace("-", "") + suffixName;
+        String url = "http://" +  EcsConstant.HOST_NAME +  ":" + EcsConstant.IMAGE_PORT + "/img/" + fileName;
+//        String uploadDir = "/Users/weidian/logs/";
+        String uploadDir = EcsConstant.BASIS_PATH;
+        File dest = new File( uploadDir + fileName);
+        // 检测是否存在目录
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
+        }
+        file.transferTo(dest);
+        return Result.success(url);
+
+    }
+
+
 
 }

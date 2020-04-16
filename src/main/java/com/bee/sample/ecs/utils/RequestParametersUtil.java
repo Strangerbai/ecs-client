@@ -1,4 +1,4 @@
-package com.bee.sample.ecs.preHandle;
+package com.bee.sample.ecs.utils;
 
 import com.alibaba.fastjson.JSON;
 
