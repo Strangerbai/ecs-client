@@ -18,6 +18,7 @@ public class CustomHandlerInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
+        log.info("cookies : {}", cookies);
         if(cookies!=null && cookies.length!=0){
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals(EcsConstant.TOKEN_NAME)){
