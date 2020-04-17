@@ -4,6 +4,7 @@ import com.bee.sample.ecs.entity.EcsConstant;
 import com.bee.sample.ecs.utils.ThreadLocalUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.Cookie;
@@ -17,10 +18,12 @@ public class CustomHandlerInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals(EcsConstant.TOKEN_NAME)){
-                ThreadLocalUtil.setCookie(cookie.getValue());
-                break;
+        if(cookies!=null && cookies.length!=0){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals(EcsConstant.TOKEN_NAME)){
+                    ThreadLocalUtil.setCookie(cookie.getValue());
+                    break;
+                }
             }
         }
         log.info("cookie : {}", ThreadLocalUtil.getCookie());
