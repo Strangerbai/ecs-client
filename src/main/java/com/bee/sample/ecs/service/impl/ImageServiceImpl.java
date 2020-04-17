@@ -50,7 +50,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public List<String> getUserPictureName() {
         List<TbImage> images = imageRepository.getImageInfo(ThreadLocalUtil.getCookie());
-        List<String> result = images.stream().map(TbImage::getImageName).collect(Collectors.toList());
+        List<String> result = images.stream().map(TbImage::getUrl).collect(Collectors.toList());
         return result;
     }
 

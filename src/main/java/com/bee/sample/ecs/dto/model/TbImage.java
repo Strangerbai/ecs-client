@@ -1,5 +1,7 @@
 package com.bee.sample.ecs.dto.model;
 
+import com.bee.sample.ecs.entity.EcsConstant;
+
 import java.util.Date;
 
 public class TbImage {
@@ -61,5 +63,9 @@ public class TbImage {
 
     public void setGmtUpdate(Date gmtUpdate) {
         this.gmtUpdate = gmtUpdate;
+    }
+
+    public String getUrl(){
+        return "http://" +  EcsConstant.HOST_NAME +  ":" + EcsConstant.IMAGE_PORT + "/img/" + this.getImageName();
     }
 }
