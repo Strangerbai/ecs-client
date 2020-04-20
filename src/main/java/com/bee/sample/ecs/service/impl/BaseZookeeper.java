@@ -1,5 +1,6 @@
 package com.bee.sample.ecs.service.impl;
 
+import com.bee.sample.ecs.entity.EcsConstant;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 import org.springframework.stereotype.Component;
@@ -9,11 +10,13 @@ import java.util.concurrent.CountDownLatch;
 
 @Component
 public class BaseZookeeper implements Watcher {
-
-
     private static ZooKeeper zookeeper;
     private static final int SESSION_TIME_OUT = 2000;
     private CountDownLatch countDownLatch = new CountDownLatch(1);
+
+    public BaseZookeeper() throws Exception {
+        this.connectZookeeper(EcsConstant.ZK_HOST);
+    }
 
     @Override
     public void process(WatchedEvent watchedEvent) {

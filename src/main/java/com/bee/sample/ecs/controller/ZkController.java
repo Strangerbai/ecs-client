@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -22,9 +23,8 @@ public class ZkController {
 
     @RequestMapping(value = "/create")
     public Result<Boolean> createNode() throws Exception {
-        baseZookeeper.connectZookeeper(EcsConstant.ZK_HOST);
         Stat stat = baseZookeeper.checkExist("/mydubbo");
-        if(stat.getCzxid() == 0){
+        if(stat == null || stat.getCzxid() == 0){
             String create = baseZookeeper.createNode("/mydubbo", "test", CreateMode.PERSISTENT);
             log.info("create : {}", create);
             String data = baseZookeeper.getData("/mydubbo");
@@ -39,10 +39,16 @@ public class ZkController {
 
     @RequestMapping(value = "/delete")
     public Result<Boolean> deleteNode() throws Exception {
-        baseZookeeper.connectZookeeper(EcsConstant.ZK_HOST);
         baseZookeeper.deleteNode("/mydubbo");
         return Result.success(Boolean.TRUE);
     }
+
+    @RequestMapping(value = "/get")
+    public Result<List<String>> getNode() throws Exception {
+        List<String> children =  baseZookeeper.getChildren("/");
+        return Result.success(children);
+    }
+
 
 
 }
