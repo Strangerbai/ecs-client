@@ -1,11 +1,12 @@
 package com.bee.sample.ecs.service;
 
 import com.bee.sample.ecs.dto.model.TbMemberInfoDO;
+import org.example.rpc.server.engine.BaseInterface;
 
 import java.util.List;
 
-public interface IMemberInfoService {
+public interface IMemberInfoService extends BaseInterface {
 
-    List<TbMemberInfoDO> getMemberInfoByStatus(String status);
+    String getMemberInfoByStatus(String status);
 
 }

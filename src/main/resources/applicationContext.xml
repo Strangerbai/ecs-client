@@ -27,6 +27,39 @@
 
     <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
 
+    <bean id="zKRegistryCenter" class="org.example.rpc.server.registry.ZKRegistryCenter" init-method="init">
+        <property name="zkCluster" value="39.101.207.71:2181"/>
+    </bean>
+
+    <bean id="rpcServer" class="org.example.rpc.server.server.RpcServer"/>
+
+    <bean id="rpcEngine" class="org.example.rpc.server.engine.RpcEngine" init-method="init">
+        <property name="basePackage" value="com.bee.sample.ecs.service.impl"/>
+        <property name="beanProvider" ref="springBeanProvider"/>
+        <property name="rpcExecuter" ref="taskExecutor"/>
+        <property name="rpcServer" ref="rpcServer"/>
+        <property name="zkRegistryCenter" ref="zKRegistryCenter"/>
+        <property name="servcieAddress" value="127.0.0.1:8887"/>
+    </bean>
+
+
+    <bean id="springBeanProvider" class="com.bee.sample.ecs.SpringBeanProvider"/>
+
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="8"/> <!--核心线程数 -->
+        <property name="maxPoolSize" value="16"/> <!--最大线程数 -->
+        <property name="keepAliveSeconds" value ="3000"/> <!--线程最大空闲时间 -->
+        <property name="queueCapacity" value="200"/> <!-- 队列大小 -->
+        <property name="threadNamePrefix" value="my-pool-"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+
+
+
     <cache:annotation-driven/>
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">

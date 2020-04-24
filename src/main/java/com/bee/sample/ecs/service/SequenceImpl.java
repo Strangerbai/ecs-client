@@ -1,4 +1,4 @@
-package com.bee.sample.ecs.service.impl;
+package com.bee.sample.ecs.service;
 
 import org.springframework.util.CollectionUtils;
 

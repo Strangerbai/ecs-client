@@ -5,12 +5,12 @@
 
     <bean id="integrationDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-<!--        <property name="url" value="jdbc:mysql://127.0.0.1:3306/bai?useSSL=false" />-->
-<!--        <property name="username" value="root" />-->
-<!--        <property name="password" value="root"/>-->
-        <property name="url" value="jdbc:mysql://rm-8vbt7gnoa4ilvcw5658870.mysql.zhangbei.rds.aliyuncs.com:3306/common_rds?useSSL=false" />
-        <property name="username" value="db_simple" />
-        <property name="password" value="Tm181109"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/bai?useSSL=false" />
+        <property name="username" value="root" />
+        <property name="password" value="root"/>
+<!--        <property name="url" value="jdbc:mysql://rm-8vbt7gnoa4ilvcw5658870.mysql.zhangbei.rds.aliyuncs.com:3306/common_rds?useSSL=false" />-->
+<!--        <property name="username" value="db_simple" />-->
+<!--        <property name="password" value="Tm181109"/>-->
     </bean>
 
     <bean id="integrationSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

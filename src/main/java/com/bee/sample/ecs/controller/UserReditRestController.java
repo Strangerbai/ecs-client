@@ -19,11 +19,11 @@ public class UserReditRestController {
     @Resource
     IMemberInfoService iMemberInfoService;
 
-    @RequestMapping(value = "/userCredit/{status}")
-    public List<TbMemberInfoDO> getCreditLevel(@PathVariable String status){
-        List<TbMemberInfoDO> tbMemberInfoDOS =  iMemberInfoService.getMemberInfoByStatus(status);
-        logger.info("tbMemberInfoDOS {}", JSON.toJSONString(tbMemberInfoDOS));
-        return tbMemberInfoDOS;
-    }
+//    @RequestMapping(value = "/userCredit/{status}")
+//    public List<TbMemberInfoDO> getCreditLevel(@PathVariable String status){
+//        List<TbMemberInfoDO> tbMemberInfoDOS =  iMemberInfoService.getMemberInfoByStatus(status);
+//        logger.info("tbMemberInfoDOS {}", JSON.toJSONString(tbMemberInfoDOS));
+//        return tbMemberInfoDOS;
+//    }
 
 }

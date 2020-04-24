@@ -17,10 +17,10 @@ public class TestController {
     @Resource
     IMemberInfoService iMemberInfoService;
 
-    @RequestMapping(value = "userCredit")
-    public List<TbMemberInfoDO> getCreditLevel(@RequestBody UserCreditReq userCreditReq){
-        List<TbMemberInfoDO> tbMemberInfoDOS =  iMemberInfoService.getMemberInfoByStatus(userCreditReq.getStatus());
-        return tbMemberInfoDOS;
-    }
+//    @RequestMapping(value = "userCredit")
+//    public List<TbMemberInfoDO> getCreditLevel(@RequestBody UserCreditReq userCreditReq){
+//        List<TbMemberInfoDO> tbMemberInfoDOS =  iMemberInfoService.getMemberInfoByStatus(userCreditReq.getStatus());
+//        return tbMemberInfoDOS;
+//    }
 
 }

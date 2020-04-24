@@ -1,4 +1,4 @@
-package com.bee.sample.ecs.service.impl;
+package com.bee.sample.ecs.service;
 
 import com.bee.sample.ecs.entity.EcsConstant;
 import org.apache.zookeeper.*;

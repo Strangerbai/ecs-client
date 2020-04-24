@@ -15,17 +15,17 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class IMemberInfoServiceImpl implements IMemberInfoService {
+public class EcsIMemberInfoService implements IMemberInfoService {
 
     @Resource
     TbMemberInfoDOMapper tbMemberInfoDOMapper;
 
     @Override
-    public List<TbMemberInfoDO> getMemberInfoByStatus(String status) {
+    public String getMemberInfoByStatus(String status) {
         TbMemberInfoDOExample example = new TbMemberInfoDOExample();
         example.createCriteria().andStatusEqualTo(Byte.valueOf(status));
         List<TbMemberInfoDO> result = tbMemberInfoDOMapper.selectByExample(example);
         log.info("getMemberInfoByStatus result : {}", JSON.toJSONString(result));
-        return result;
+        return JSON.toJSONString(result);
     }
 }
