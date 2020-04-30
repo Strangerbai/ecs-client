@@ -134,6 +134,12 @@
             </exclusions>
         </dependency>
 
+        <!-- netty-all依赖 -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.36.Final</version>
+        </dependency>
 
     </dependencies>
 
