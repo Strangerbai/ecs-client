@@ -44,7 +44,16 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="t_image" domainObjectName="TbImage" enableCountByExample="false"
+<!--        <table schema="" tableName="t_image" domainObjectName="TbImage" enableCountByExample="false"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="true"-->
+<!--               enableDeleteByPrimaryKey="false"-->
+<!--               enableUpdateByPrimaryKey="true">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+
+
+        <table schema="" tableName="m_blog" domainObjectName="TbBlog" enableCountByExample="false"
                enableUpdateByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false"
