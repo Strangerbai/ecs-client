@@ -8,8 +8,14 @@ public interface BlogService {
 
     boolean create(TbBlog blog);
 
+    boolean update(TbBlog blog);
+
     List<TbBlog> fetchAll();
 
     TbBlog fetchById(Long id);
+
+
+    List<TbBlog> fetchByToken(String token);
+
 
 }

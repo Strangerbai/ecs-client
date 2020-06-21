@@ -21,6 +21,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public boolean update(TbBlog blog) {
+        TbBlogExample example = new TbBlogExample();
+        example.createCriteria().andIdEqualTo(blog.getId());
+        return tbBlogMapper.updateByExampleWithBLOBs(blog, example)>0;
+    }
+
+    @Override
     public List<TbBlog> fetchAll() {
         TbBlogExample example = new TbBlogExample();
         example.createCriteria().andIdGreaterThan(0L);
@@ -30,5 +37,12 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public TbBlog fetchById(Long id) {
         return tbBlogMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<TbBlog> fetchByToken(String token) {
+        TbBlogExample example = new TbBlogExample();
+        example.createCriteria().andTokenEqualTo(token);
+        return tbBlogMapper.selectByExampleWithBLOBs(example);
     }
 }
