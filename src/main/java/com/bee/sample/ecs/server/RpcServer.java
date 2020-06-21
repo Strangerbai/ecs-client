@@ -14,7 +14,7 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class RpcServer {
 
     // 启动服务器

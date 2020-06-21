@@ -12,9 +12,6 @@ import javax.annotation.Resource;
 @ImportResource("classpath:applicationContext.xml")
 public class EcsApplication implements CommandLineRunner {
 
-    @Resource
-    RpcServer rpcServer;
-
     public static void main(String[] args) {
         SpringApplication.run(EcsApplication.class, args);
     }
@@ -22,6 +19,7 @@ public class EcsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        rpcServer.start();
+//        rpcServer.start();
+        System.out.println("start");
     }
 }
